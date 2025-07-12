@@ -1,0 +1,333 @@
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<div class="fade-in">
+    <!-- Welcome Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 class="h3 mb-1">Welcome back, @ViewBag.User?.DisplayName! 👋</h1>
+                    <p class="text-muted mb-0">Here's what's happening with your workspace today.</p>
+                </div>
+                <div class="text-end">
+                    <small class="text-muted">
+                        <i class="fas fa-clock me-1"></i>
+                        <span id="currentTime"></span>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="row mb-4">
+        <div class="col-xl-3 col-md-6 mb-3">
+            <div class="dashboard-card stats-card stats-primary">
+                <div class="stats-icon">
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+                <div class="stats-number" id="todayEvents">0</div>
+                <div class="stats-label">Today's Events</div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-3">
+            <div class="dashboard-card stats-card stats-success">
+                <div class="stats-icon">
+                    <i class="fas fa-table"></i>
+                </div>
+                <div class="stats-number" id="totalSpreadsheets">0</div>
+                <div class="stats-label">Spreadsheets</div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-3">
+            <div class="dashboard-card stats-card stats-warning">
+                <div class="stats-icon">
+                    <i class="fas fa-code"></i>
+                </div>
+                <div class="stats-number" id="codeProjects">0</div>
+                <div class="stats-label">Code Projects</div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-3">
+            <div class="dashboard-card stats-card stats-danger">
+                <div class="stats-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="stats-number" id="unreadMessages">0</div>
+                <div class="stats-label">Unread Messages</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Phone Stats -->
+    <div class="row mb-4">
+        <div class="col-xl-4 col-md-6 mb-3">
+            <div class="dashboard-card stats-card stats-info">
+                <div class="stats-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <div class="stats-number" id="phoneNumber">@ViewBag.User?.PhoneNumber</div>
+                <div class="stats-label">Your Phone Number</div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-md-6 mb-3">
+            <div class="dashboard-card stats-card stats-success">
+                <div class="stats-icon">
+                    <i class="fas fa-phone"></i>
+                </div>
+                <div class="stats-number" id="missedCalls">0</div>
+                <div class="stats-label">Missed Calls</div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-md-6 mb-3">
+            <div class="dashboard-card stats-card stats-warning">
+                <div class="stats-icon">
+                    <i class="fas fa-sms"></i>
+                </div>
+                <div class="stats-number" id="unreadSms">0</div>
+                <div class="stats-label">Unread SMS</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h5 class="mb-3">Quick Actions</h5>
+            <div class="quick-actions">
+                <a href="@Url.Action("Calendar", "Dashboard")" class="quick-action">
+                    <i class="fas fa-plus-circle"></i>
+                    <h6>New Event</h6>
+                    <p>Schedule a meeting or reminder</p>
+                </a>
+                <a href="@Url.Action("Spreadsheet", "Dashboard")" class="quick-action">
+                    <i class="fas fa-file-excel"></i>
+                    <h6>Create Spreadsheet</h6>
+                    <p>Start a new data analysis</p>
+                </a>
+                <a href="@Url.Action("CodeEditor", "Dashboard")" class="quick-action">
+                    <i class="fas fa-code"></i>
+                    <h6>Write Code</h6>
+                    <p>Create a new JavaScript project</p>
+                </a>
+                <a href="@Url.Action("Messages", "Dashboard")" class="quick-action">
+                    <i class="fas fa-paper-plane"></i>
+                    <h6>Send Message</h6>
+                    <p>Communicate with team members</p>
+                </a>
+                <a href="@Url.Action("RemoteDesktop", "Home")" class="quick-action">
+                    <i class="fas fa-desktop"></i>
+                    <h6>Remote Desktop</h6>
+                    <p>Connect to another computer</p>
+                </a>
+                @if (ViewBag.IsAdmin == true)
+                {
+                    <a href="@Url.Action("Admin", "Dashboard")" class="quick-action">
+                        <i class="fas fa-users-cog"></i>
+                        <h6>Manage Users</h6>
+                        <p>Add or modify user accounts</p>
+                    </a>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Row -->
+    <div class="row">
+        <!-- Recent Activity -->
+        <div class="col-lg-8 mb-4">
+            <div class="dashboard-card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h6 class="mb-0">Recent Activity</h6>
+                    <a href="#" class="btn btn-sm btn-outline-primary">View All</a>
+                </div>
+                <div class="card-body">
+                    <div id="recentActivity">
+                        <div class="activity-item">
+                            <div class="activity-icon bg-primary text-white">
+                                <i class="fas fa-calendar"></i>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-title">Created new event: Team Meeting</div>
+                                <div class="activity-time">2 hours ago</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon bg-success text-white">
+                                <i class="fas fa-table"></i>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-title">Updated Budget Spreadsheet</div>
+                                <div class="activity-time">4 hours ago</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon bg-warning text-white">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-title">Executed JavaScript project</div>
+                                <div class="activity-time">6 hours ago</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon bg-info text-white">
+                                <i class="fas fa-message"></i>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-title">Received message from Alice Johnson</div>
+                                <div class="activity-time">1 day ago</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Upcoming Events -->
+        <div class="col-lg-4 mb-4">
+            <div class="dashboard-card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h6 class="mb-0">Upcoming Events</h6>
+                    <a href="@Url.Action("Calendar", "Dashboard")" class="btn btn-sm btn-outline-primary">
+                        <i class="fas fa-calendar me-1"></i>Calendar
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div id="upcomingEvents">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                <small class="fw-bold">15</small>
+                            </div>
+                            <div>
+                                <div class="fw-semibold">Team Standup</div>
+                                <small class="text-muted">Today, 9:00 AM</small>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                <small class="fw-bold">16</small>
+                            </div>
+                            <div>
+                                <div class="fw-semibold">Project Review</div>
+                                <small class="text-muted">Tomorrow, 2:00 PM</small>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <div class="bg-warning text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                <small class="fw-bold">18</small>
+                            </div>
+                            <div>
+                                <div class="fw-semibold">Client Presentation</div>
+                                <small class="text-muted">Friday, 10:00 AM</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- System Status -->
+    <div class="row">
+        <div class="col-12">
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h6 class="mb-0">System Status</h6>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-md-3">
+                            <div class="d-flex align-items-center justify-content-center mb-2">
+                                <div class="bg-success rounded-circle me-2" style="width: 12px; height: 12px;"></div>
+                                <span class="fw-semibold">Database</span>
+                            </div>
+                            <small class="text-success">Online</small>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="d-flex align-items-center justify-content-center mb-2">
+                                <div class="bg-success rounded-circle me-2" style="width: 12px; height: 12px;"></div>
+                                <span class="fw-semibold">API Services</span>
+                            </div>
+                            <small class="text-success">Operational</small>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="d-flex align-items-center justify-content-center mb-2">
+                                <div class="bg-success rounded-circle me-2" style="width: 12px; height: 12px;"></div>
+                                <span class="fw-semibold">File Storage</span>
+                            </div>
+                            <small class="text-success">Available</small>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="d-flex align-items-center justify-content-center mb-2">
+                                <div class="bg-warning rounded-circle me-2" style="width: 12px; height: 12px;"></div>
+                                <span class="fw-semibold">Remote Desktop</span>
+                            </div>
+                            <small class="text-warning">Limited</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Update current time
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleString('en-US', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            document.getElementById('currentTime').textContent = timeString;
+        }
+
+        // Update time immediately and then every minute
+        updateTime();
+        setInterval(updateTime, 60000);
+
+        // Load dashboard data
+        $(document).ready(function() {
+            // Simulate loading stats (replace with actual API calls)
+            setTimeout(() => {
+                $('#todayEvents').text('3');
+                $('#totalSpreadsheets').text('12');
+                $('#codeProjects').text('8');
+                $('#unreadMessages').text('5');
+            }, 500);
+
+            // Load mobile phone stats
+            loadMobilePhoneStats();
+        });
+
+        // Load mobile phone statistics
+        async function loadMobilePhoneStats() {
+            try {
+                // Load missed calls count
+                const missedCallsResponse = await fetch('/api/mobilephone/calls/missed-count');
+                if (missedCallsResponse.ok) {
+                    const missedCalls = await missedCallsResponse.json();
+                    $('#missedCalls').text(missedCalls);
+                }
+
+                // Load unread SMS count
+                const unreadSmsResponse = await fetch('/api/mobilephone/sms/unread-count');
+                if (unreadSmsResponse.ok) {
+                    const unreadSms = await unreadSmsResponse.json();
+                    $('#unreadSms').text(unreadSms);
+                }
+            } catch (error) {
+                console.error('Error loading mobile phone stats:', error);
+            }
+        }
+    </script>
+}

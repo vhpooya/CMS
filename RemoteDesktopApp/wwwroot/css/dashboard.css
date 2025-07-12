@@ -1,0 +1,607 @@
+/* Business Workspace Pro - Dashboard Styles */
+
+:root {
+    --sidebar-width: 260px;
+    --navbar-height: 60px;
+    --primary-color: #2563eb;
+    --primary-dark: #1d4ed8;
+    --secondary-color: #64748b;
+    --success-color: #10b981;
+    --warning-color: #f59e0b;
+    --danger-color: #ef4444;
+    --dark-color: #1e293b;
+    --light-color: #f8fafc;
+    --border-color: #e2e8f0;
+    --sidebar-bg: #1e293b;
+    --sidebar-text: #94a3b8;
+    --sidebar-active: #3b82f6;
+    --card-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --transition: all 0.3s ease;
+}
+
+/* Dashboard Body */
+.dashboard-body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: var(--light-color);
+    margin: 0;
+    padding: 0;
+}
+
+/* Top Navigation */
+.navbar {
+    height: var(--navbar-height);
+    z-index: 1030;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.navbar-brand {
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+/* Notification Dropdown */
+.notification-dropdown {
+    width: 320px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.notification-dropdown .dropdown-item {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.notification-dropdown .dropdown-item:last-child {
+    border-bottom: none;
+}
+
+/* Dashboard Container */
+.dashboard-container {
+    display: flex;
+    margin-top: var(--navbar-height);
+    min-height: calc(100vh - var(--navbar-height));
+}
+
+/* Sidebar */
+.sidebar {
+    width: var(--sidebar-width);
+    background-color: var(--sidebar-bg);
+    color: var(--sidebar-text);
+    position: fixed;
+    top: var(--navbar-height);
+    left: 0;
+    height: calc(100vh - var(--navbar-height));
+    overflow-y: auto;
+    z-index: 1020;
+    transition: var(--transition);
+}
+
+.sidebar-content {
+    padding: 1rem 0;
+}
+
+.sidebar .nav-link {
+    color: var(--sidebar-text);
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    align-items: center;
+    transition: var(--transition);
+    border: none;
+    border-radius: 0;
+}
+
+.sidebar .nav-link:hover {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar .nav-link.active {
+    color: white;
+    background-color: var(--sidebar-active);
+    border-right: 3px solid #60a5fa;
+}
+
+.sidebar .nav-link i {
+    width: 20px;
+    margin-right: 0.75rem;
+    text-align: center;
+}
+
+.sidebar .nav-divider {
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.1);
+    margin: 1rem 0;
+}
+
+.sidebar .nav-header {
+    color: #94a3b8;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.5rem 1.5rem;
+    margin-top: 1rem;
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    margin-left: var(--sidebar-width);
+    padding: 2rem;
+    background-color: var(--light-color);
+    min-height: calc(100vh - var(--navbar-height));
+}
+
+/* Dashboard Cards */
+.dashboard-card {
+    background: white;
+    border-radius: 0.75rem;
+    box-shadow: var(--card-shadow);
+    border: none;
+    transition: var(--transition);
+}
+
+.dashboard-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+.dashboard-card .card-header {
+    background: transparent;
+    border-bottom: 1px solid var(--border-color);
+    padding: 1.5rem;
+    font-weight: 600;
+}
+
+.dashboard-card .card-body {
+    padding: 1.5rem;
+}
+
+/* Stats Cards */
+.stats-card {
+    text-align: center;
+    padding: 2rem 1rem;
+}
+
+.stats-card .stats-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    font-size: 1.5rem;
+    color: white;
+}
+
+.stats-card .stats-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--dark-color);
+    margin-bottom: 0.5rem;
+}
+
+.stats-card .stats-label {
+    color: var(--secondary-color);
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.stats-primary .stats-icon { background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)); }
+.stats-success .stats-icon { background: linear-gradient(135deg, var(--success-color), #059669); }
+.stats-warning .stats-icon { background: linear-gradient(135deg, var(--warning-color), #d97706); }
+.stats-danger .stats-icon { background: linear-gradient(135deg, var(--danger-color), #dc2626); }
+
+/* Quick Actions */
+.quick-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.quick-action {
+    background: white;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    text-align: center;
+    text-decoration: none;
+    color: var(--dark-color);
+    box-shadow: var(--card-shadow);
+    transition: var(--transition);
+    border: 2px solid transparent;
+}
+
+.quick-action:hover {
+    transform: translateY(-2px);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.quick-action i {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.quick-action h6 {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.quick-action p {
+    font-size: 0.875rem;
+    color: var(--secondary-color);
+    margin: 0;
+}
+
+/* Recent Activity */
+.activity-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.activity-item:last-child {
+    border-bottom: none;
+}
+
+.activity-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    font-size: 0.875rem;
+}
+
+.activity-content {
+    flex: 1;
+}
+
+.activity-title {
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+}
+
+.activity-time {
+    font-size: 0.75rem;
+    color: var(--secondary-color);
+}
+
+/* Profile Page */
+.profile-header {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: white;
+    padding: 3rem 0;
+    border-radius: 0.75rem;
+    margin-bottom: 2rem;
+}
+
+.profile-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 4px solid white;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.profile-info h2 {
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.profile-info .badge {
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+}
+
+/* Form Styles */
+.form-control {
+    border: 2px solid var(--border-color);
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    transition: var(--transition);
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.25);
+}
+
+.btn {
+    font-weight: 500;
+    border-radius: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    transition: var(--transition);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    border: none;
+}
+
+.btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+    
+    .sidebar.show {
+        transform: translateX(0);
+    }
+    
+    .main-content {
+        margin-left: 0;
+        padding: 1rem;
+    }
+    
+    .dashboard-container {
+        position: relative;
+    }
+    
+    .stats-card .stats-number {
+        font-size: 1.5rem;
+    }
+    
+    .quick-actions {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Loading States */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.spinner-border-sm {
+    width: 1rem;
+    height: 1rem;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Calendar Styles */
+.calendar-grid {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    height: 600px;
+}
+
+.calendar-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background-color: var(--light-color);
+    border-bottom: 2px solid var(--border-color);
+}
+
+.calendar-day-header {
+    padding: 1rem;
+    text-align: center;
+    font-weight: 600;
+    color: var(--secondary-color);
+    border-right: 1px solid var(--border-color);
+}
+
+.calendar-day-header:last-child {
+    border-right: none;
+}
+
+.calendar-body {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+}
+
+.calendar-day {
+    border: 1px solid var(--border-color);
+    padding: 0.5rem;
+    min-height: 80px;
+    position: relative;
+    cursor: pointer;
+    transition: var(--transition);
+    background: white;
+}
+
+.calendar-day:hover {
+    background-color: rgba(59, 130, 246, 0.05);
+}
+
+.calendar-day.other-month {
+    background-color: #f8f9fa;
+    color: #adb5bd;
+}
+
+.calendar-day.today {
+    background-color: rgba(59, 130, 246, 0.1);
+    border-color: var(--primary-color);
+    font-weight: 600;
+}
+
+.calendar-day.selected {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.calendar-day.has-events {
+    border-left: 4px solid var(--primary-color);
+}
+
+.calendar-day.holiday {
+    background-color: rgba(239, 68, 68, 0.1);
+    border-color: var(--danger-color);
+}
+
+.calendar-day-number {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.calendar-day-persian {
+    font-size: 0.75rem;
+    color: var(--secondary-color);
+    margin-bottom: 0.25rem;
+}
+
+.calendar-events {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.calendar-event {
+    background: var(--primary-color);
+    color: white;
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-size: 0.7rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+
+.calendar-event.priority-low { background: #6b7280; }
+.calendar-event.priority-medium { background: var(--primary-color); }
+.calendar-event.priority-high { background: var(--warning-color); }
+.calendar-event.priority-critical { background: var(--danger-color); }
+
+.calendar-event.type-work { background: #059669; }
+.calendar-event.type-meeting { background: #7c3aed; }
+.calendar-event.type-deadline { background: var(--danger-color); }
+.calendar-event.type-holiday { background: #dc2626; }
+.calendar-event.type-birthday { background: #ec4899; }
+
+/* Event List Styles */
+.event-item {
+    display: flex;
+    align-items-center;
+    padding: 0.75rem;
+    border-left: 4px solid var(--primary-color);
+    background: rgba(59, 130, 246, 0.05);
+    border-radius: 0.5rem;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.event-item:hover {
+    background: rgba(59, 130, 246, 0.1);
+    transform: translateX(2px);
+}
+
+.event-item.priority-high {
+    border-left-color: var(--warning-color);
+    background: rgba(245, 158, 11, 0.05);
+}
+
+.event-item.priority-critical {
+    border-left-color: var(--danger-color);
+    background: rgba(239, 68, 68, 0.05);
+}
+
+.event-time {
+    font-size: 0.875rem;
+    color: var(--secondary-color);
+    min-width: 60px;
+}
+
+.event-content {
+    flex: 1;
+    margin-left: 0.75rem;
+}
+
+.event-title {
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+}
+
+.event-details {
+    font-size: 0.75rem;
+    color: var(--secondary-color);
+}
+
+.event-priority {
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.7rem;
+    font-weight: 500;
+}
+
+.event-priority.low { background: #f3f4f6; color: #6b7280; }
+.event-priority.medium { background: #dbeafe; color: #1d4ed8; }
+.event-priority.high { background: #fef3c7; color: #d97706; }
+.event-priority.critical { background: #fee2e2; color: #dc2626; }
+
+/* Holiday Styles */
+.holiday-item {
+    display: flex;
+    align-items-center;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    background: rgba(239, 68, 68, 0.05);
+    margin-bottom: 0.5rem;
+}
+
+.holiday-date {
+    font-size: 0.875rem;
+    color: var(--danger-color);
+    font-weight: 600;
+    min-width: 40px;
+}
+
+.holiday-name {
+    flex: 1;
+    margin-left: 0.75rem;
+    font-weight: 500;
+}
+
+/* Persian Calendar Styles */
+.persian-calendar .calendar-day-header {
+    font-family: 'Vazir', 'Tahoma', sans-serif;
+    direction: rtl;
+}
+
+.persian-calendar .calendar-day {
+    direction: rtl;
+    text-align: right;
+}
+
+.persian-date-display {
+    font-family: 'Vazir', 'Tahoma', sans-serif;
+    direction: rtl;
+    text-align: center;
+}
+
+/* Utility Classes */
+.text-gradient {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.glass-effect {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}

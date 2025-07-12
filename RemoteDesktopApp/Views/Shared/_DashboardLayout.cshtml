@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - فضای کاری تجاری پرو</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/rtl.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/dashboard.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/mobile-phone.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/RemoteDesktopApp.styles.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/css/spreadsheet.css" asp-append-version="true" />
+</head>
+<body class="dashboard-body">
+    <!-- Top Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="@Url.Action("Index", "Dashboard")">
+                <i class="fas fa-briefcase me-2"></i>Business Workspace Pro
+            </a>
+            
+            <div class="navbar-nav ms-auto d-flex flex-row align-items-center">
+                <!-- Notifications -->
+                <div class="nav-item dropdown me-3">
+                    <a class="nav-link position-relative" href="#" id="notificationsDropdown" role="button" data-bs-toggle="dropdown">
+                        <i class="fas fa-bell"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="notificationCount">
+                            3
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end notification-dropdown">
+                        <li><h6 class="dropdown-header">Notifications</h6></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-calendar text-primary me-2"></i>Meeting in 30 minutes</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-file text-success me-2"></i>Spreadsheet shared with you</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-code text-warning me-2"></i>Code execution completed</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-center" href="#">View all notifications</a></li>
+                    </ul>
+                </div>
+                
+                <!-- User Profile -->
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                        <img src="@(ViewBag.User?.ProfilePicture ?? "/images/default-avatar.png")" alt="Profile" class="rounded-circle me-2" width="32" height="32">
+                        <span class="d-none d-md-inline">@ViewBag.User?.DisplayName</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="@Url.Action("Profile", "Dashboard")"><i class="fas fa-user me-2"></i>Profile</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li>
+                        @if (ViewBag.IsAdmin == true)
+                        {
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="@Url.Action("Admin", "Dashboard")"><i class="fas fa-users-cog me-2"></i>Admin Panel</a></li>
+                        }
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="@Url.Action("Logout", "Home")"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="sidebar-content">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link @(ViewContext.RouteData.Values["action"]?.ToString() == "Index" ? "active" : "")" href="@Url.Action("Index", "Dashboard")">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @(ViewContext.RouteData.Values["action"]?.ToString() == "Profile" ? "active" : "")" href="@Url.Action("Profile", "Dashboard")">
+                            <i class="fas fa-user"></i>
+                            <span>Profile</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @(ViewContext.RouteData.Values["action"]?.ToString() == "Calendar" ? "active" : "")" href="@Url.Action("Calendar", "Dashboard")">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Calendar</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @(ViewContext.RouteData.Values["action"]?.ToString() == "Spreadsheet" ? "active" : "")" href="@Url.Action("Spreadsheet", "Dashboard")">
+                            <i class="fas fa-table"></i>
+                            <span>Spreadsheets</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @(ViewContext.RouteData.Values["action"]?.ToString() == "Messages" ? "active" : "")" href="@Url.Action("Messages", "Dashboard")">
+                            <i class="fas fa-comments"></i>
+                            <span>Messages</span>
+                            <span class="badge bg-danger ms-auto">2</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @(ViewContext.RouteData.Values["action"]?.ToString() == "CodeEditor" ? "active" : "")" href="@Url.Action("CodeEditor", "Dashboard")">
+                            <i class="fas fa-code"></i>
+                            <span>Code Editor</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @(ViewContext.RouteData.Values["action"]?.ToString() == "UnitManagement" ? "active" : "")" href="@Url.Action("UnitManagement", "Dashboard")">
+                            <i class="fas fa-sitemap"></i>
+                            <span>مدیریت واحدها</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("RemoteDesktop", "Home")">
+                            <i class="fas fa-desktop"></i>
+                            <span>Remote Desktop</span>
+                        </a>
+                    </li>
+                    
+                    @if (ViewBag.IsAdmin == true)
+                    {
+                        <li class="nav-divider"></li>
+                        <li class="nav-header">Administration</li>
+                        <li class="nav-item">
+                            <a class="nav-link @(ViewContext.RouteData.Values["action"]?.ToString() == "Admin" ? "active" : "")" href="@Url.Action("Admin", "Dashboard")">
+                                <i class="fas fa-users-cog"></i>
+                                <span>User Management</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="fas fa-chart-bar"></i>
+                                <span>Reports</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="fas fa-cogs"></i>
+                                <span>System Settings</span>
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            @RenderBody()
+        </main>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+   <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/dashboard.js" asp-append-version="true"></script>
+	<script src="~/js/spreadsheet.js" asp-append-version="true"></script>
+    
+    <script>
+        function logout() {
+            fetch('/api/auth/logout', { method: 'POST' })
+                .then(() => {
+                    localStorage.removeItem('authToken');
+                    localStorage.removeItem('user');
+                    window.location.href = '/Home/Login';
+                })
+                .catch(error => {
+                    console.error('Logout error:', error);
+                    // Force logout even if API call fails
+                    localStorage.removeItem('authToken');
+                    localStorage.removeItem('user');
+                    window.location.href = '/Home/Login';
+                });
+        }
+    </script>
+
+    <script src="~/js/farsi-localization.js" asp-append-version="true"></script>
+    <script src="~/js/mobile-phone.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

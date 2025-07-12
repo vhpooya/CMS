@@ -1,0 +1,262 @@
+@{
+    ViewData["Title"] = "ویرایشگر کد";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<div class="container-fluid h-100">
+    <div class="row h-100">
+        <!-- Project Explorer Sidebar -->
+        <div class="col-md-3 bg-light border-end h-100 p-0">
+            <div class="d-flex flex-column h-100">
+                <!-- Project Header -->
+                <div class="p-3 border-bottom bg-white">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h6 class="mb-0">
+                            <i class="fas fa-folder-open me-2"></i>پروژه‌ها
+                        </h6>
+                        <div class="dropdown">
+                            <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#" onclick="createNewProject()">
+                                    <i class="fas fa-folder-plus me-2"></i>پروژه جدید
+                                </a></li>
+                                <li><a class="dropdown-item" href="#" onclick="createNewFile()">
+                                    <i class="fas fa-file-plus me-2"></i>فایل جدید
+                                </a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#" onclick="importProject()">
+                                    <i class="fas fa-upload me-2"></i>وارد کردن پروژه
+                                </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Tree -->
+                <div class="flex-grow-1 overflow-auto p-2">
+                    <div id="projectTree">
+                        <div class="project-item">
+                            <div class="d-flex align-items-center p-2 rounded hover-bg-light cursor-pointer" onclick="toggleProject(1)">
+                                <i class="fas fa-folder text-warning me-2"></i>
+                                <span>پروژه نمونه</span>
+                                <i class="fas fa-chevron-down ms-auto small"></i>
+                            </div>
+                            <div class="project-files ms-3" id="project-1">
+                                <div class="file-item d-flex align-items-center p-1 rounded hover-bg-light cursor-pointer" onclick="openFile('index.html')">
+                                    <i class="fab fa-html5 text-danger me-2"></i>
+                                    <span>index.html</span>
+                                </div>
+                                <div class="file-item d-flex align-items-center p-1 rounded hover-bg-light cursor-pointer" onclick="openFile('style.css')">
+                                    <i class="fab fa-css3-alt text-primary me-2"></i>
+                                    <span>style.css</span>
+                                </div>
+                                <div class="file-item d-flex align-items-center p-1 rounded hover-bg-light cursor-pointer" onclick="openFile('script.js')">
+                                    <i class="fab fa-js-square text-warning me-2"></i>
+                                    <span>script.js</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="project-item mt-2">
+                            <div class="d-flex align-items-center p-2 rounded hover-bg-light cursor-pointer" onclick="toggleProject(2)">
+                                <i class="fas fa-folder text-warning me-2"></i>
+                                <span>پروژه React</span>
+                                <i class="fas fa-chevron-right ms-auto small"></i>
+                            </div>
+                            <div class="project-files ms-3 d-none" id="project-2">
+                                <div class="file-item d-flex align-items-center p-1 rounded hover-bg-light cursor-pointer" onclick="openFile('App.jsx')">
+                                    <i class="fab fa-react text-info me-2"></i>
+                                    <span>App.jsx</span>
+                                </div>
+                                <div class="file-item d-flex align-items-center p-1 rounded hover-bg-light cursor-pointer" onclick="openFile('package.json')">
+                                    <i class="fas fa-file-code text-success me-2"></i>
+                                    <span>package.json</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Editor Area -->
+        <div class="col-md-9 p-0 d-flex flex-column h-100">
+            <!-- Editor Toolbar -->
+            <div class="bg-white border-bottom p-2">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center">
+                        <!-- File Tabs -->
+                        <div class="file-tabs d-flex" id="fileTabs">
+                            <div class="file-tab active d-flex align-items-center px-3 py-1 border rounded-top me-1" data-file="index.html">
+                                <i class="fab fa-html5 text-danger me-2"></i>
+                                <span>index.html</span>
+                                <button class="btn btn-sm ms-2 p-0" onclick="closeFile('index.html')">
+                                    <i class="fas fa-times small"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-sm btn-outline-primary" onclick="saveFile()">
+                            <i class="fas fa-save me-1"></i>ذخیره
+                        </button>
+                        <button class="btn btn-sm btn-outline-success" onclick="runCode()">
+                            <i class="fas fa-play me-1"></i>اجرا
+                        </button>
+                        <button class="btn btn-sm btn-outline-info" onclick="formatCode()">
+                            <i class="fas fa-magic me-1"></i>قالب‌بندی
+                        </button>
+                        <div class="dropdown">
+                            <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                <i class="fas fa-cog"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#" onclick="showSettings()">
+                                    <i class="fas fa-cog me-2"></i>تنظیمات
+                                </a></li>
+                                <li><a class="dropdown-item" href="#" onclick="toggleTheme()">
+                                    <i class="fas fa-palette me-2"></i>تغییر تم
+                                </a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#" onclick="showKeyboardShortcuts()">
+                                    <i class="fas fa-keyboard me-2"></i>میانبرهای کیبورد
+                                </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Editor Content -->
+            <div class="flex-grow-1 d-flex">
+                <!-- Code Editor -->
+                <div class="flex-grow-1 position-relative">
+                    <div id="codeEditor" class="h-100 w-100"></div>
+                    <textarea id="codeTextarea" class="form-control h-100 w-100 border-0 font-monospace" style="resize: none; outline: none;" placeholder="کد خود را اینجا بنویسید..."><!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صفحه نمونه</title>
+    <style>
+        body {
+            font-family: 'Vazir', sans-serif;
+            direction: rtl;
+            text-align: right;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .btn {
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .btn:hover {
+            background: #5a6fd8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>خوش آمدید به ویرایشگر کد</h1>
+        <p>این یک صفحه نمونه است که با HTML، CSS و JavaScript ساخته شده است.</p>
+        <button class="btn" onclick="showMessage()">کلیک کنید</button>
+        <div id="message" style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 5px; display: none;">
+            <p>سلام! این پیام با JavaScript نمایش داده شده است.</p>
+        </div>
+    </div>
+
+    <script>
+        function showMessage() {
+            const messageDiv = document.getElementById('message');
+            messageDiv.style.display = messageDiv.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+</body>
+</html></textarea>
+                </div>
+
+                <!-- Preview Panel -->
+                <div class="border-start bg-white" style="width: 40%; min-width: 300px;" id="previewPanel">
+                    <div class="p-2 border-bottom bg-light">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h6 class="mb-0">
+                                <i class="fas fa-eye me-2"></i>پیش‌نمایش
+                            </h6>
+                            <div class="btn-group btn-group-sm">
+                                <button class="btn btn-outline-secondary" onclick="refreshPreview()">
+                                    <i class="fas fa-sync"></i>
+                                </button>
+                                <button class="btn btn-outline-secondary" onclick="togglePreview()">
+                                    <i class="fas fa-compress"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <iframe id="previewFrame" class="w-100 border-0" style="height: calc(100% - 60px);"></iframe>
+                </div>
+            </div>
+
+            <!-- Console/Output Panel -->
+            <div class="bg-dark text-light border-top" style="height: 200px; min-height: 150px;">
+                <div class="p-2 border-bottom border-secondary">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex">
+                            <button class="btn btn-sm btn-outline-light me-2 active" onclick="showConsoleTab('console')">
+                                <i class="fas fa-terminal me-1"></i>کنسول
+                            </button>
+                            <button class="btn btn-sm btn-outline-light me-2" onclick="showConsoleTab('output')">
+                                <i class="fas fa-list me-1"></i>خروجی
+                            </button>
+                            <button class="btn btn-sm btn-outline-light" onclick="showConsoleTab('problems')">
+                                <i class="fas fa-exclamation-triangle me-1"></i>مشکلات
+                            </button>
+                        </div>
+                        <button class="btn btn-sm btn-outline-light" onclick="clearConsole()">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="p-2 h-100 overflow-auto">
+                    <div id="consoleContent">
+                        <div class="text-success">ویرایشگر کد آماده است...</div>
+                        <div class="text-info">برای اجرای کد، دکمه "اجرا" را کلیک کنید.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/code-editor.js" asp-append-version="true"></script>
+    <script>
+        // Initialize code editor when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeCodeEditor();
+            updatePreview();
+        });
+    </script>
+}

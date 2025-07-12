@@ -1,0 +1,344 @@
+@model RemoteDesktopApp.Models.User
+@{
+    ViewData["Title"] = "Profile";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<div class="fade-in">
+    <!-- Profile Header -->
+    <div class="profile-header text-center">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-4">
+                    <img src="@(Model.ProfilePicture ?? "/images/default-avatar.png")" alt="Profile Picture" class="profile-avatar mb-3">
+                    <div>
+                        <button class="btn btn-light btn-sm" onclick="document.getElementById('profilePictureInput').click()">
+                            <i class="fas fa-camera me-1"></i>Change Photo
+                        </button>
+                        <input type="file" id="profilePictureInput" accept="image/*" style="display: none;" onchange="uploadProfilePicture(this)">
+                    </div>
+                </div>
+                <div class="col-md-8 text-md-start">
+                    <div class="profile-info">
+                        <h2>@Model.DisplayName</h2>
+                        <p class="mb-3">@@@Model.Username • @Model.Email</p>
+                        <div class="d-flex flex-wrap gap-2 justify-content-center justify-content-md-start">
+                            <span class="badge bg-light text-dark">
+                                <i class="fas fa-user-tag me-1"></i>@Model.Role
+                            </span>
+                            <span class="badge bg-light text-dark">
+                                <i class="fas fa-id-card me-1"></i>ID: @Model.ClientId
+                            </span>
+                            @if (!string.IsNullOrEmpty(Model.Department))
+                            {
+                                <span class="badge bg-light text-dark">
+                                    <i class="fas fa-building me-1"></i>@Model.Department
+                                </span>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.JobTitle))
+                            {
+                                <span class="badge bg-light text-dark">
+                                    <i class="fas fa-briefcase me-1"></i>@Model.JobTitle
+                                </span>
+                            }
+                            <span class="badge @(Model.IsOnline ? "bg-success" : "bg-secondary")">
+                                <i class="fas fa-circle me-1"></i>@(Model.IsOnline ? "Online" : "Offline")
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Content -->
+    <div class="row">
+        <!-- Profile Information -->
+        <div class="col-lg-8 mb-4">
+            <div class="dashboard-card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h6 class="mb-0">Profile Information</h6>
+                    <button class="btn btn-primary btn-sm" onclick="toggleEditMode()">
+                        <i class="fas fa-edit me-1"></i>Edit Profile
+                    </button>
+                </div>
+                <div class="card-body">
+                    <form id="profileForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="displayName" class="form-label">Display Name</label>
+                                <input type="text" class="form-control" id="displayName" value="@Model.DisplayName" readonly>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="email" class="form-label">Email Address</label>
+                                <input type="email" class="form-control" id="email" value="@Model.Email" readonly>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="department" class="form-label">Department</label>
+                                <input type="text" class="form-control" id="department" value="@(Model.Department ?? "")" readonly>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="jobTitle" class="form-label">Job Title</label>
+                                <input type="text" class="form-control" id="jobTitle" value="@(Model.JobTitle ?? "")" readonly>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="phoneNumber" class="form-label">Phone Number</label>
+                                <input type="tel" class="form-control" id="phoneNumber" value="@(Model.PhoneNumber ?? "")" readonly>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="clientId" class="form-label">Client ID</label>
+                                <input type="text" class="form-control" id="clientId" value="@Model.ClientId" readonly>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label for="bio" class="form-label">Bio</label>
+                                <textarea class="form-control" id="bio" rows="3" readonly>@(Model.Bio ?? "")</textarea>
+                            </div>
+                        </div>
+                        <div id="editButtons" style="display: none;">
+                            <button type="button" class="btn btn-success me-2" onclick="saveProfile()">
+                                <i class="fas fa-save me-1"></i>Save Changes
+                            </button>
+                            <button type="button" class="btn btn-secondary" onclick="cancelEdit()">
+                                <i class="fas fa-times me-1"></i>Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Account Statistics -->
+        <div class="col-lg-4 mb-4">
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h6 class="mb-0">Account Statistics</h6>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="text-muted">Member Since</span>
+                            <span class="fw-semibold">@Model.CreatedAt.ToString("MMM yyyy")</span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="text-muted">Last Login</span>
+                            <span class="fw-semibold">@(Model.LastLoginAt?.ToString("MMM dd, HH:mm") ?? "Never")</span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="text-muted">Last Activity</span>
+                            <span class="fw-semibold">@(Model.LastSeenAt?.ToString("MMM dd, HH:mm") ?? "Never")</span>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="text-muted">Spreadsheets Created</span>
+                            <span class="fw-semibold">12</span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="text-muted">Code Projects</span>
+                            <span class="fw-semibold">8</span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="text-muted">Events Created</span>
+                            <span class="fw-semibold">25</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Security Settings -->
+            <div class="dashboard-card mt-4">
+                <div class="card-header">
+                    <h6 class="mb-0">Security Settings</h6>
+                </div>
+                <div class="card-body">
+                    <button class="btn btn-outline-primary w-100 mb-2" onclick="changePassword()">
+                        <i class="fas fa-key me-1"></i>Change Password
+                    </button>
+                    <button class="btn btn-outline-secondary w-100 mb-2">
+                        <i class="fas fa-shield-alt me-1"></i>Two-Factor Authentication
+                    </button>
+                    <button class="btn btn-outline-info w-100">
+                        <i class="fas fa-download me-1"></i>Download My Data
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="row">
+        <div class="col-12">
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h6 class="mb-0">Recent Activity</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Activity</th>
+                                    <th>Module</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <i class="fas fa-calendar text-primary me-2"></i>
+                                        Created new event: Team Meeting
+                                    </td>
+                                    <td><span class="badge bg-primary">Calendar</span></td>
+                                    <td>2 hours ago</td>
+                                    <td><span class="badge bg-success">Success</span></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <i class="fas fa-table text-success me-2"></i>
+                                        Updated Budget Spreadsheet
+                                    </td>
+                                    <td><span class="badge bg-success">Spreadsheet</span></td>
+                                    <td>4 hours ago</td>
+                                    <td><span class="badge bg-success">Success</span></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <i class="fas fa-code text-warning me-2"></i>
+                                        Executed JavaScript project
+                                    </td>
+                                    <td><span class="badge bg-warning">Code Editor</span></td>
+                                    <td>6 hours ago</td>
+                                    <td><span class="badge bg-success">Success</span></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <i class="fas fa-sign-in-alt text-info me-2"></i>
+                                        Logged into system
+                                    </td>
+                                    <td><span class="badge bg-info">System</span></td>
+                                    <td>8 hours ago</td>
+                                    <td><span class="badge bg-success">Success</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        let isEditMode = false;
+        let originalValues = {};
+
+        function toggleEditMode() {
+            isEditMode = !isEditMode;
+            const inputs = document.querySelectorAll('#profileForm input, #profileForm textarea');
+            const editButtons = document.getElementById('editButtons');
+            
+            if (isEditMode) {
+                // Store original values
+                inputs.forEach(input => {
+                    originalValues[input.id] = input.value;
+                    input.removeAttribute('readonly');
+                });
+                editButtons.style.display = 'block';
+            } else {
+                inputs.forEach(input => {
+                    input.setAttribute('readonly', true);
+                });
+                editButtons.style.display = 'none';
+            }
+        }
+
+        function cancelEdit() {
+            // Restore original values
+            Object.keys(originalValues).forEach(id => {
+                document.getElementById(id).value = originalValues[id];
+            });
+            toggleEditMode();
+        }
+
+        async function saveProfile() {
+            const formData = {
+                displayName: document.getElementById('displayName').value,
+                email: document.getElementById('email').value,
+                department: document.getElementById('department').value,
+                jobTitle: document.getElementById('jobTitle').value,
+                phoneNumber: document.getElementById('phoneNumber').value,
+                bio: document.getElementById('bio').value
+            };
+
+            try {
+                const response = await fetch('/api/dashboard/profile', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify(formData)
+                });
+
+                if (response.ok) {
+                    const updatedUser = await response.json();
+                    toggleEditMode();
+                    showNotification('پروفایل با موفقیت به‌روزرسانی شد!', 'success');
+                } else {
+                    const error = await response.json();
+                    showNotification('خطا در به‌روزرسانی پروفایل: ' + (error.message || 'خطای نامشخص'), 'error');
+                }
+            } catch (error) {
+                console.error('Error saving profile:', error);
+                showNotification('خطا در به‌روزرسانی پروفایل: ' + error.message, 'error');
+            }
+        }
+
+        function uploadProfilePicture(input) {
+            if (input.files && input.files[0]) {
+                const formData = new FormData();
+                formData.append('profilePicture', input.files[0]);
+                
+                // TODO: Implement file upload
+                console.log('Uploading profile picture');
+                showNotification('Profile picture updated!', 'success');
+            }
+        }
+
+        function changePassword() {
+            // TODO: Implement password change modal
+            showNotification('Password change feature coming soon!', 'info');
+        }
+
+        function showNotification(message, type) {
+            // Simple notification (you can replace with a proper notification library)
+            const alertClass = type === 'success' ? 'alert-success' : 
+                              type === 'error' ? 'alert-danger' : 'alert-info';
+            
+            const notification = document.createElement('div');
+            notification.className = `alert ${alertClass} alert-dismissible fade show position-fixed`;
+            notification.style.cssText = 'top: 80px; right: 20px; z-index: 1050; min-width: 300px;';
+            notification.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 5000);
+        }
+    </script>
+}

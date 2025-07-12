@@ -1,0 +1,491 @@
+/* Remote Desktop Pro - Modern UI Styles */
+
+:root {
+    --primary-color: #2563eb;
+    --primary-dark: #1d4ed8;
+    --secondary-color: #64748b;
+    --success-color: #10b981;
+    --warning-color: #f59e0b;
+    --danger-color: #ef4444;
+    --dark-color: #1e293b;
+    --light-color: #f8fafc;
+    --border-color: #e2e8f0;
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --border-radius: 0.5rem;
+    --transition: all 0.2s ease-in-out;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: var(--light-color);
+    color: var(--dark-color);
+}
+
+/* Navigation */
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.navbar-nav .nav-link {
+    font-weight: 500;
+    padding: 0.75rem 1rem;
+    border-radius: var(--border-radius);
+    margin: 0 0.25rem;
+    transition: var(--transition);
+}
+
+.navbar-nav .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Cards */
+.card {
+    border: none;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+}
+
+.card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.card-header {
+    background-color: transparent;
+    border-bottom: 1px solid var(--border-color);
+    font-weight: 600;
+}
+
+/* Buttons */
+.btn {
+    font-weight: 500;
+    border-radius: var(--border-radius);
+    padding: 0.75rem 1.5rem;
+    transition: var(--transition);
+    border: none;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+}
+
+.btn-outline-primary {
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/* Forms */
+.form-control {
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 0.75rem 1rem;
+    transition: var(--transition);
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.25);
+}
+
+.form-label {
+    font-weight: 500;
+    color: var(--dark-color);
+    margin-bottom: 0.5rem;
+}
+
+/* Remote Desktop Viewer */
+.remote-desktop-container {
+    background: #000;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    position: relative;
+    box-shadow: var(--shadow-lg);
+}
+
+.remote-desktop-viewer {
+    width: 100%;
+    height: 600px;
+    background: #000;
+    position: relative;
+    cursor: crosshair;
+}
+
+.remote-desktop-screen {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+.remote-desktop-loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+}
+
+.remote-desktop-controls {
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.control-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.control-group label {
+    font-size: 0.875rem;
+    margin: 0;
+}
+
+.control-group select,
+.control-group input {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    border-radius: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+.control-group select:focus,
+.control-group input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+/* Status indicators */
+.status-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.status-online {
+    background-color: rgba(16, 185, 129, 0.1);
+    color: var(--success-color);
+}
+
+.status-offline {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: var(--danger-color);
+}
+
+.status-connecting {
+    background-color: rgba(245, 158, 11, 0.1);
+    color: var(--warning-color);
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: currentColor;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* Login form */
+.login-container {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 400px;
+    padding: 2rem;
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.login-header h2 {
+    font-weight: 700;
+    color: var(--dark-color);
+    margin-bottom: 0.5rem;
+}
+
+.login-header p {
+    color: var(--secondary-color);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .remote-desktop-viewer {
+        height: 400px;
+    }
+    
+    .remote-desktop-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .control-group {
+        justify-content: space-between;
+    }
+    
+    .navbar-nav .nav-link {
+        margin: 0;
+        border-radius: 0;
+    }
+}
+
+/* Utility classes */
+.text-gradient {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.glass-effect {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Loading spinner */
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-top: 4px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Virtual Keyboard */
+.virtual-keyboard {
+    background: var(--dark-color);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+}
+
+.keyboard-row {
+    display: flex;
+    justify-content: center;
+    gap: 0.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.key {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 0.75rem 1rem;
+    border-radius: 0.25rem;
+    font-family: monospace;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: var(--transition);
+    min-width: 40px;
+    text-align: center;
+}
+
+.key:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+}
+
+.key:active {
+    transform: translateY(0);
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.key.wide {
+    min-width: 80px;
+}
+
+.key.extra-wide {
+    min-width: 120px;
+}
+
+/* Connection status animations */
+.status-dot {
+    animation: pulse 2s infinite;
+}
+
+.status-online .status-dot {
+    animation: pulse-green 2s infinite;
+}
+
+.status-connecting .status-dot {
+    animation: pulse-yellow 1s infinite;
+}
+
+.status-offline .status-dot {
+    animation: none;
+}
+
+@keyframes pulse-green {
+    0%, 100% {
+        opacity: 1;
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+    }
+    50% {
+        opacity: 0.7;
+        box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+    }
+}
+
+@keyframes pulse-yellow {
+    0%, 100% {
+        opacity: 1;
+        box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7);
+    }
+    50% {
+        opacity: 0.7;
+        box-shadow: 0 0 0 10px rgba(245, 158, 11, 0);
+    }
+}
+
+/* Notification system */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-lg);
+    padding: 1rem 1.5rem;
+    z-index: 1050;
+    max-width: 400px;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+}
+
+.notification.show {
+    transform: translateX(0);
+}
+
+.notification.success {
+    border-left: 4px solid var(--success-color);
+}
+
+.notification.error {
+    border-left: 4px solid var(--danger-color);
+}
+
+.notification.warning {
+    border-left: 4px solid var(--warning-color);
+}
+
+.notification.info {
+    border-left: 4px solid var(--primary-color);
+}
+
+/* Fullscreen mode */
+.remote-desktop-container.fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1040;
+    border-radius: 0;
+}
+
+.remote-desktop-container.fullscreen .remote-desktop-viewer {
+    height: calc(100vh - 80px);
+}
+
+/* Performance indicators */
+.performance-stats {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    font-family: monospace;
+}
+
+/* Responsive improvements */
+@media (max-width: 576px) {
+    .remote-desktop-controls {
+        padding: 0.5rem;
+    }
+
+    .control-group {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.25rem;
+    }
+
+    .control-group label {
+        font-weight: 600;
+    }
+
+    .virtual-keyboard {
+        padding: 0.5rem;
+    }
+
+    .key {
+        padding: 0.5rem;
+        min-width: 30px;
+        font-size: 0.75rem;
+    }
+
+    .key.wide {
+        min-width: 60px;
+    }
+
+    .key.extra-wide {
+        min-width: 90px;
+    }
+}

@@ -1,0 +1,155 @@
+﻿@{
+    ViewData["Title"] = "خانه";
+}
+
+<div class="container-fluid py-5">
+    <!-- Hero Section -->
+    <div class="row justify-content-center text-center mb-5">
+        <div class="col-lg-8">
+            <h1 class="display-3 fw-bold text-gradient mb-4">فضای کاری تجاری پرو</h1>
+            <p class="lead mb-4">
+                راه‌حل قدرتمند، امن و فوق‌العاده سریع دسکتاپ راه دور با سیستم تلفن همراه یکپارچه.
+                از هر مکانی به هر کامپیوتری با امنیت و عملکرد سازمانی متصل شوید.
+            </p>
+            <div class="d-flex justify-content-center gap-3 flex-wrap">
+                <a href="@Url.Action("RemoteDesktop", "Home")" class="btn btn-primary btn-lg">
+                    <i class="fas fa-desktop me-2"></i>شروع جلسه راه دور
+                </a>
+                <a href="@Url.Action("Login", "Home")" class="btn btn-outline-primary btn-lg">
+                    <i class="fas fa-sign-in-alt me-2"></i>ورود
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="row g-4 mb-5">
+        <div class="col-md-6 col-lg-3">
+            <div class="card h-100 text-center fade-in">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <i class="fas fa-bolt fa-3x text-primary"></i>
+                    </div>
+                    <h5 class="card-title">Lightning Fast</h5>
+                    <p class="card-text">
+                        Optimized screen capture and compression for smooth, responsive remote desktop experience.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+            <div class="card h-100 text-center fade-in">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <i class="fas fa-shield-alt fa-3x text-success"></i>
+                    </div>
+                    <h5 class="card-title">Secure</h5>
+                    <p class="card-text">
+                        End-to-end encryption with JWT authentication ensures your connections are always secure.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+            <div class="card h-100 text-center fade-in">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <i class="fas fa-mobile-alt fa-3x text-warning"></i>
+                    </div>
+                    <h5 class="card-title">Cross-Platform</h5>
+                    <p class="card-text">
+                        Access from any device with a web browser - Windows, Mac, Linux, iOS, or Android.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+            <div class="card h-100 text-center fade-in">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <i class="fas fa-cogs fa-3x text-info"></i>
+                    </div>
+                    <h5 class="card-title">Feature Rich</h5>
+                    <p class="card-text">
+                        File transfer, clipboard sync, multi-monitor support, and more advanced features.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Status Section -->
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>System Status</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span>Server Status:</span>
+                                <span class="status-indicator status-online">
+                                    <span class="status-dot"></span>
+                                    Online
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span>Active Connections:</span>
+                                <span class="badge bg-primary">0</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span>Version:</span>
+                                <span class="text-muted">1.0.0</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span>Uptime:</span>
+                                <span class="text-muted" id="uptime">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Update uptime
+        function updateUptime() {
+            fetch('/api/remotedesktop/status')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.uptime) {
+                        const uptime = data.uptime;
+                        const days = Math.floor(uptime.totalDays);
+                        const hours = Math.floor(uptime.hours);
+                        const minutes = Math.floor(uptime.minutes);
+
+                        let uptimeText = '';
+                        if (days > 0) uptimeText += `${days}d `;
+                        if (hours > 0) uptimeText += `${hours}h `;
+                        uptimeText += `${minutes}m`;
+
+                        document.getElementById('uptime').textContent = uptimeText;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching status:', error);
+                    document.getElementById('uptime').textContent = 'Unknown';
+                });
+        }
+
+        // Update uptime on page load and every minute
+        updateUptime();
+        setInterval(updateUptime, 60000);
+    </script>
+}

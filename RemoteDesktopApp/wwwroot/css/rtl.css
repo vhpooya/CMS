@@ -1,0 +1,359 @@
+/* RTL and Persian Font Support */
+
+/* Font Face Declarations */
+@font-face {
+    font-family: 'BKoodak';
+    src: url('../fonts/BKoodak.woff2') format('woff2'),
+         url('../fonts/BKoodak.woff') format('woff'),
+         url('../fonts/BKoodak.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Vazir';
+    src: url('../fonts/Vazir.woff2') format('woff2'),
+         url('../fonts/Vazir.woff') format('woff'),
+         url('../fonts/Vazir.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'BYekan';
+    src: url('../fonts/BYekan.woff2') format('woff2'),
+         url('../fonts/BYekan.woff') format('woff'),
+         url('../fonts/BYekan.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* RTL Base Styles */
+html[dir="rtl"] {
+    direction: rtl;
+    text-align: right;
+}
+
+body {
+    font-family: 'Vazir', 'BYekan', 'BKoodak', 'Tahoma', 'Arial', sans-serif;
+    direction: rtl;
+    text-align: right;
+}
+
+/* RTL Layout Adjustments */
+.container-fluid,
+.container {
+    direction: rtl;
+}
+
+/* Navigation RTL */
+.navbar-nav {
+    direction: rtl;
+}
+
+.navbar-brand {
+    margin-right: 0;
+    margin-left: 1rem;
+}
+
+.navbar-toggler {
+    margin-left: 0;
+    margin-right: auto;
+}
+
+/* Dropdown RTL */
+.dropdown-menu {
+    right: 0;
+    left: auto;
+    text-align: right;
+}
+
+.dropdown-item {
+    text-align: right;
+    padding-right: 1rem;
+    padding-left: 3rem;
+}
+
+.dropdown-item i {
+    margin-left: 0.5rem;
+    margin-right: 0;
+}
+
+/* Button RTL */
+.btn i {
+    margin-left: 0.5rem;
+    margin-right: 0;
+}
+
+.btn-group > .btn:not(:last-child) {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 0.375rem;
+    border-bottom-right-radius: 0.375rem;
+}
+
+.btn-group > .btn:not(:first-child) {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-top-left-radius: 0.375rem;
+    border-bottom-left-radius: 0.375rem;
+}
+
+/* Form RTL */
+.form-label {
+    text-align: right;
+}
+
+.form-control {
+    text-align: right;
+    direction: rtl;
+}
+
+.input-group-text {
+    border-left: 1px solid #ced4da;
+    border-right: 0;
+}
+
+.input-group > .form-control:not(:last-child) {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.input-group > .form-control:not(:first-child) {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+/* Card RTL */
+.card-header {
+    text-align: right;
+}
+
+.card-body {
+    text-align: right;
+}
+
+.card-title {
+    text-align: right;
+}
+
+/* List RTL */
+.list-group-item {
+    text-align: right;
+}
+
+.list-group-item i {
+    margin-left: 0.5rem;
+    margin-right: 0;
+}
+
+/* Table RTL */
+.table th,
+.table td {
+    text-align: right;
+}
+
+.table th:first-child,
+.table td:first-child {
+    border-right: 0;
+}
+
+.table th:last-child,
+.table td:last-child {
+    border-left: 0;
+}
+
+/* Dashboard RTL */
+.dashboard-sidebar {
+    right: 0;
+    left: auto;
+}
+
+.dashboard-content {
+    margin-right: 250px;
+    margin-left: 0;
+}
+
+.dashboard-card {
+    text-align: right;
+}
+
+.stats-icon {
+    float: left;
+    margin-left: 0;
+    margin-right: 1rem;
+}
+
+.stats-number {
+    text-align: right;
+}
+
+.stats-label {
+    text-align: right;
+}
+
+/* Mobile Phone RTL */
+.mobile-phone-widget {
+    left: 20px;
+    right: auto;
+}
+
+.phone-nav-item {
+    text-align: center;
+}
+
+.phone-content-area {
+    text-align: right;
+}
+
+.dialer-number {
+    text-align: center;
+    direction: ltr;
+}
+
+.contact-info {
+    text-align: right;
+}
+
+.contact-name {
+    text-align: right;
+}
+
+.contact-phone {
+    text-align: right;
+    direction: ltr;
+}
+
+.contact-actions {
+    float: left;
+}
+
+.sms-info {
+    text-align: right;
+}
+
+.sms-contact-name {
+    text-align: right;
+}
+
+.sms-last-message {
+    text-align: right;
+}
+
+.sms-meta {
+    text-align: left;
+}
+
+/* Calendar RTL */
+.calendar-header {
+    text-align: right;
+}
+
+.calendar-day {
+    text-align: center;
+}
+
+.calendar-event {
+    text-align: right;
+}
+
+/* Spreadsheet RTL */
+.spreadsheet-toolbar {
+    text-align: right;
+}
+
+.spreadsheet-cell {
+    text-align: right;
+}
+
+/* Code Editor RTL */
+.code-editor-toolbar {
+    text-align: right;
+}
+
+.code-editor-sidebar {
+    right: 0;
+    left: auto;
+}
+
+/* Messaging RTL */
+.message-bubble {
+    text-align: right;
+}
+
+.message-bubble.sent {
+    margin-left: 20%;
+    margin-right: 0;
+    background: #007bff;
+    color: white;
+}
+
+.message-bubble.received {
+    margin-right: 20%;
+    margin-left: 0;
+    background: #f8f9fa;
+    color: #333;
+}
+
+/* Utility Classes RTL */
+.text-left {
+    text-align: right !important;
+}
+
+.text-right {
+    text-align: left !important;
+}
+
+.float-left {
+    float: right !important;
+}
+
+.float-right {
+    float: left !important;
+}
+
+.mr-1 { margin-left: 0.25rem !important; margin-right: 0 !important; }
+.mr-2 { margin-left: 0.5rem !important; margin-right: 0 !important; }
+.mr-3 { margin-left: 1rem !important; margin-right: 0 !important; }
+.mr-4 { margin-left: 1.5rem !important; margin-right: 0 !important; }
+.mr-5 { margin-left: 3rem !important; margin-right: 0 !important; }
+
+.ml-1 { margin-right: 0.25rem !important; margin-left: 0 !important; }
+.ml-2 { margin-right: 0.5rem !important; margin-left: 0 !important; }
+.ml-3 { margin-right: 1rem !important; margin-left: 0 !important; }
+.ml-4 { margin-right: 1.5rem !important; margin-left: 0 !important; }
+.ml-5 { margin-right: 3rem !important; margin-left: 0 !important; }
+
+.pr-1 { padding-left: 0.25rem !important; padding-right: 0 !important; }
+.pr-2 { padding-left: 0.5rem !important; padding-right: 0 !important; }
+.pr-3 { padding-left: 1rem !important; padding-right: 0 !important; }
+.pr-4 { padding-left: 1.5rem !important; padding-right: 0 !important; }
+.pr-5 { padding-left: 3rem !important; padding-right: 0 !important; }
+
+.pl-1 { padding-right: 0.25rem !important; padding-left: 0 !important; }
+.pl-2 { padding-right: 0.5rem !important; padding-left: 0 !important; }
+.pl-3 { padding-right: 1rem !important; padding-left: 0 !important; }
+.pl-4 { padding-right: 1.5rem !important; padding-left: 0 !important; }
+.pl-5 { padding-right: 3rem !important; padding-left: 0 !important; }
+
+/* Responsive RTL */
+@media (max-width: 768px) {
+    .dashboard-content {
+        margin-right: 0;
+        margin-left: 0;
+    }
+    
+    .mobile-phone-widget {
+        left: 15px;
+        right: auto;
+    }
+    
+    .contact-actions {
+        float: none;
+        display: flex;
+        justify-content: flex-start;
+    }
+}
